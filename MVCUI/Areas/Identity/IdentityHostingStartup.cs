@@ -16,9 +16,9 @@ namespace MVCUI.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                string connectionString = context.Configuration.GetConnectionString("AuthMVCDBContextConnection");
                 services.AddDbContext<AuthMVCDBContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AuthMVCDBContextConnection")));
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
                 services.AddDefaultIdentity<ApplicationUser>(options => {
                     options.SignIn.RequireConfirmedAccount = false;
